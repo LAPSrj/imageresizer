@@ -1,4 +1,5 @@
 <?php
+	set_time_limit(0);
 	
 	if(isset($_REQUEST["resize"])){		
 		require_once 'imgresize/ThumbLib.inc.php';
