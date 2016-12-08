@@ -1,5 +1,6 @@
 <?php
 	set_time_limit(0);
+	setlocale(LC_ALL,'en_US.UTF-8');
 	
 	if(isset($_REQUEST["resize"])){		
 		require_once 'imgresize/ThumbLib.inc.php';
@@ -46,15 +47,17 @@
 		
 		//Get the images
 		$images = glob("in/*.jpg");
+		$images = glob("in/*.{jpg,png,gif}", GLOB_BRACE);
 		foreach($images as $image){
+			$ext = pathinfo($image, PATHINFO_EXTENSION);
 			$img = PhpThumbFactory::create($image, $options);
 			if($adaptive){
             	$img->adaptiveResize($width, $height);
 			}else{
 				$img->resize($width, $height);
 			}
-            $filename = $name.$counter.".jpg";
-            $img->save("out/".$filename, "jpg");
+            $filename = $name.$counter.".".$ext;
+            $img->save("out/".$filename, $ext);
 			$counter++;
 		}
 				
